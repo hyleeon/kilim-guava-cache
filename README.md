@@ -30,14 +30,14 @@ from `GuavaCacheDemo.java`:
                         .refreshAfterWrite(refresh,TimeUnit.MICROSECONDS)
                         .maximumSize(maxSize));
         loader.register(new Reloadable<Integer, Double>() {
-			@Override
-			public Double reload(Integer key, Object prev) throws Pausable {
-                if (key < maxNever & prev != null)
-                    return null;
-                Task.sleep(random.nextInt(maxDelay));
-                return key+random.nextDouble();
-			}
-		});
+		@Override
+		public Double reload(Integer key, Object prev) throws Pausable {
+        	        if (key < maxNever & prev != null)
+                	    return null;
+                	Task.sleep(random.nextInt(maxDelay));
+                	return key+random.nextDouble();
+		}
+	});
         Task tasks[] = new Task[numTasks];
         for (int jj=0; jj < numTasks; jj++) {
             final int ktask = jj;
@@ -55,9 +55,9 @@ from `GuavaCacheDemo.java`:
                         }
                     }
                 
-            	}
-			};
-			tasks[jj].start();
+            		}
+            };
+            tasks[jj].start();
         }
 ```
 
