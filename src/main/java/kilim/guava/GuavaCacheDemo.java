@@ -1,30 +1,32 @@
-# kilim guava cache
+package kilim.guava;
 
-Guava cache with kilim 1.x
-`KilimCache` is a thin wrapper around a Guava `LoadingCache` to provide fully asynchronous lookup and loading
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
+import com.google.common.cache.CacheBuilder;
 
-guava provides a CacheLoader, which is used to fill a LoadingCache.
-the API supports asynchronous reloading of values, but the initial loading
-and all access during a reload are synchronous.
-as a result, non-blocking integration with kilim isn't trivial.
+import kilim.Pausable;
+import kilim.Task;
+import kilim.guava.KilimCache.Reloadable;
 
-however, by loading placeholder values and then backfilling
-when asynchronous retrieval from a backing store completes, the blocking
-portion can be avoided
+/**
+ * stress test of the kilim-guava-cache-integration.
+ * all access is performed using the pausable getCache
+ */
+public class GuavaCacheDemo {
+    
+    public void run() {
 
-
-
-
-# Limitations
-
-the caches are built using the Builder pattern with opaque implementations.
-as a result, the functionality can't be added to the cache directly
-
-# Example Usage
-
-from `GuavaCacheDemo.java`:
-```
+        final Random random = new Random();
+        int numTasks = 200;
+        final int maxIters = 1000;
+        final int maxKey = 1100;
+        final int maxDelay = 100;
+        int maxSize = 1000;
+        final int maxWait = 100;
+        int refresh = 10000;
+        final int maxNever = 100;
+        
         final KilimCache<Integer,Double> loader = new KilimCache(
                 CacheBuilder.newBuilder()
                         .refreshAfterWrite(refresh,TimeUnit.MICROSECONDS)
@@ -59,10 +61,11 @@ from `GuavaCacheDemo.java`:
 			};
 			tasks[jj].start();
         }
-```
+        
+        for (int jj=0; jj < numTasks; jj++) {
+        	tasks[jj].joinb();
+        }
 
+    }
 
-
-# Lessons
-
-this should also serve as an example of how to integrate other services with kilim
+}
