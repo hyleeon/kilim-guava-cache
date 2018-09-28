@@ -1,6 +1,7 @@
 # kilim guava cache
 
 Guava cache with kilim 1.x
+
 `KilimCache` is a thin wrapper around a Guava `LoadingCache` to provide fully asynchronous lookup and loading
 
 
